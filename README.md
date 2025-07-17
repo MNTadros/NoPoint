@@ -1,8 +1,10 @@
 # NoPoint - The Pointless Language
 
 <div align="center">
-   <img src="./DOCS/imgs/NoPoint.png" alt="NoPoint Logo" width="400">
+   <img src="./DOCS/nopoint-docs/public/DOCS/imgs/NoPoint.png" alt="NoPoint Logo" width="400">
 </div>
+
+Live docs: https://no-point-git-master-mnts-projects.vercel.app/docs
 
 Have you ever had your pinky hurt from tapping and untapping shift to get symbols for your code? Now, worry no longer (mostly)! With this new language, all you need to do is tap CAPS once, type out your operators/punctuation, and never (not really) type a semicolon again with the keyword END!
 
