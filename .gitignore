@@ -1,0 +1,22 @@
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.pytest_cache__
+
+# Virtual environments
+.venv
+venv
+env
+
+# IDE / Editor specific
+.vscode/
+
+# Generated files
+/src/output.txt
+ 
+# Node.js dependencies
+node_modules/
+

@@ -1,0 +1,86 @@
+devtools OFF
+savetext OFF
+
+function main SEMICOLON
+    integer a EQUALS 2 END
+    integer b EQUALS 3 END
+    double pi EQUALS 3.14 END
+    string msg EQUALS QUOTE Starting program... QUOTE END
+
+    PRINT msg END
+    PRINT a PLUS b END
+    PRINT pi END
+
+    callMath SEMICOLON
+    callString SEMICOLON
+    callNested SEMICOLON
+    SPACE
+main SEMICOLON
+
+
+COMMENT ========== MATH TESTING ========== END
+function callMath SEMICOLON
+    integer x EQUALS 10 END
+    integer y EQUALS 4 END
+    string msg EQUALS QUOTE This is a math test! QUOTE END
+
+    PRINT x SUBTRACT y END
+    PRINT x MULTIPLY y END
+    PRINT x DIVIDE y END
+    PRINT msg MULTIPLY y END
+    PRINT QUOTE YOU CAN DO THAT ^ !?!?!?!??!!? QUOTE END
+callMath SEMICOLON
+
+COMMENT ========== STRING TESTING ========== END
+function callString SEMICOLON
+    string greet EQUALS QUOTE Hello QUOTE END
+    string target EQUALS QUOTE NoPoint! QUOTE END
+
+    PRINT greet END
+    PRINT target END
+
+    SPACE
+callString SEMICOLON
+
+COMMENT ========== NESTED FUNCTION TESTING ========== END
+function callNested SEMICOLON
+    string intro EQUALS QUOTE Calling subfunction... QUOTE END
+    PRINT intro END
+    subPrint SEMICOLON
+callNested SEMICOLON
+
+function subPrint SEMICOLON
+    string echo EQUALS QUOTE I am inside subPrint! QUOTE END
+    PRINT echo END
+subPrint SEMICOLON
+
+function doescheck SEMICOLON
+    integer a EQUALS 5 END
+    integer b EQUALS 5 END
+    integer c EQUALS 7 END
+
+    PRINT QUOTE Checking if a EQUALS b: QUOTE END
+    DOES a EQUALS b END
+
+    PRINT QUOTE Checking if a EQUALS c: QUOTE END
+    DOES a EQUALS c END
+
+    PRINT QUOTE Checking if c GREATER b: QUOTE END
+    DOES c GREATER b END
+
+    double d EQUALS 10 POWER 2.2 END
+    PRINT d END
+
+doescheck SEMICOLON
+
+function storeVolume SEMICOLON
+    PRINT VOLUME CUBE 5 5 5 METERS END
+storeVolume SEMICOLON
+
+function storeArea SEMICOLON
+    PRINT AREA RECTANGLE 5 10 METERS END
+
+storeArea SEMICOLON
+
+
+COMMENT ========== END OF PROGRAM ========== END
