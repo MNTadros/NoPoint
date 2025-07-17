@@ -4,6 +4,28 @@
 import Navbar from "../../components/Navbar";
 
 export default function DocsHomePage() {
+  const [code, setCode] = React.useState("");
+  const [output, setOutput] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
+  async function handleRun(e) {
+    e.preventDefault();
+    setLoading(true);
+    setOutput("");
+    try {
+      const res = await fetch("put render link here", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code }),
+      });
+      const text = await res.text();
+      setOutput(text);
+    } catch (err) {
+      setOutput("Error running code. Please try again.");
+    }
+    setLoading(false);
+  }
+
   return (
     <>
       {/* Header */}
@@ -127,28 +149,29 @@ Hi there!
               <h2 className="text-xl font-bold mb-2">Playground</h2>
               <p className="text-sm mb-4">Write your NoPoint code below and run it:</p>
               <form>
-                <textarea
-                  name="code"
-                  id="codeInput"
-                  className="w-full h-40 p-4 border rounded bg-purple-100 text-purple-900 text-sm font-mono"
-                  placeholder="Write your NoPoint code here..."
-                ></textarea>
-                <button
-                  type="submit"
-                  className="mt-4 px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800"
+                <form onSubmit={handleRun}>
+                  <textarea
+                    name="code"
+                    id="codeInput"
+                    className="w-full h-40 p-4 border rounded bg-purple-100 text-purple-900 text-sm font-mono"
+                    placeholder="Write your NoPoint code here..."
+                    value={code}
+                    onChange={e => setCode(e.target.value)}
+                  ></textarea>
+                  <button
+                    type="submit"
+                    className="mt-4 px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800"
+                    disabled={loading}
+                  >
+                    {loading ? "Running..." : "Run Code"}
+                  </button>
+                </form>
+                <pre
+                  id="output"
+                  className="bg-purple-900 text-white p-4 rounded text-sm mt-4 overflow-x-auto min-h-16"
                 >
-                  Run Code
-                </button>
-                <span id="loading" className="ml-2 text-sm text-purple-600 hidden">
-                  Running...
-                </span>
-              </form>
-              <pre
-                id="output"
-                className="bg-purple-900 text-white p-4 rounded text-sm mt-4 overflow-x-auto min-h-16"
-              >
-                Click "Run Code" to see output here...
-              </pre>
+                  {output || "Click 'Run Code' to see output here..."}
+                </pre>
             </section>
           </div>
         </main>
