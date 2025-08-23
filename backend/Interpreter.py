@@ -103,21 +103,21 @@ class Interpreter:
             elif current_func is not None and (line.startswith("    ") or line.startswith("\t")):
                 body_lines.append(line.strip())
 
-        # # Second pass: execute all top-level lines
-        # for line in lines:
-        #     stripped = line.strip()
-        #     if stripped.startswith(("integer", "double", "string")):
-        #         self.parse_types(stripped)
-        #     elif stripped.startswith("PRINT"):
-        #         self.handle_print(stripped)
-        #     elif stripped.startswith("DOES"):
-        #         self.handle_does(stripped)
-        #     elif stripped == "SPACE":
-        #         print()
-        #     elif stripped == "COMMENT":
-        #         pass
-        #     elif len(stripped.split()) == 2 and stripped.split()[1] == "SEMICOLON":
-        #         self.execute_function(stripped.split()[0])
+        # Second pass: execute all top-level lines
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith(("integer", "double", "string")):
+                self.parse_types(stripped)
+            elif stripped.startswith("PRINT"):
+                self.handle_print(stripped)
+            elif stripped.startswith("DOES"):
+                self.handle_does(stripped)
+            elif stripped == "SPACE":
+                print()
+            elif stripped == "COMMENT":
+                pass
+            elif len(stripped.split()) == 2 and stripped.split()[1] == "SEMICOLON":
+                self.execute_function(stripped.split()[0])
 
     # Handle PRINT command
     def handle_print(self, line):
