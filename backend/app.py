@@ -32,8 +32,25 @@ def run_code():
 @app.route("/", methods=["GET"])
 def home():
     return """
-    <h1>NoPoint Backend</h1>
-    <p>Welcome! Use <code>https://no-point.vercel.app/</code> to execute code.</p>
+    <html>
+        <head>
+            <title>NoPoint Backend</title>
+            <style>
+                body { font-family: Arial, sans-serif; background: #f8f9fa; color: #222; margin: 40px; }
+                .container { max-width: 600px; margin: auto; background: #fff; padding: 32px 40px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+                h1 { color: #0070f3; }
+                code { background: #f1f1f1; padding: 2px 6px; border-radius: 4px; }
+                a { color: #0070f3; text-decoration: none; }
+                a:hover { text-decoration: underline; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>NoPoint Backend</h1>
+                <p>Welcome! Use the <a href="https://no-point.vercel.app/docs" target="_blank"><code>API docs</code></a> to execute code.</p>
+            </div>
+        </body>
+    </html>
     """
 
 if __name__ == '__main__':
