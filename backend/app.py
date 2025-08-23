@@ -29,5 +29,12 @@ def run_code():
 
     return jsonify({'output': output})
 
+@app.route("/", methods=["GET"])
+def home():
+    return """
+    <h1>NoPoint Backend</h1>
+    <p>Welcome! Use <code>https://no-point.vercel.app/</code> to execute code.</p>
+    """
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
