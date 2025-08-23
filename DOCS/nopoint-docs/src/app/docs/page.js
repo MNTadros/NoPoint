@@ -1,8 +1,54 @@
 "use client";
 
+import { useEffect } from "react";
 import Navbar from "../../components/Navbar";
 
 export default function DocsHomePage() {
+  const BACKEND_URL = "https://nopoint-backend.onrender.com";
+
+  // wake backend when docs page loads
+  useEffect(() => {
+    fetch(`${BACKEND_URL}/health`).catch(() => {
+      console.log("Backend is sleeping, waking up...");
+    });
+  }, []);
+
+  // Handler for playground form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const loading = document.getElementById("loading");
+    const output = document.getElementById("output");
+    loading.classList.remove("hidden");
+    output.textContent = "";
+    const code = document.getElementById("codeInput").value;
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/run`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code }),
+      });
+
+      if (!res.ok) {
+        if (res.status >= 500) {
+          output.textContent =
+            "⚠️ Backend is waking up (Render free plan). Please retry in ~30s.";
+        } else {
+          output.textContent = `Error: ${res.statusText}`;
+        }
+        return;
+      }
+
+      const data = await res.json();
+      output.textContent = data.output || "No output.";
+    } catch (err) {
+      output.textContent =
+        "⚠️ Backend is likely waking up. Please retry in ~30s.";
+    }
+
+    loading.classList.add("hidden");
+  };
+
   return (
     <>
       {/* Header */}
@@ -33,9 +79,7 @@ export default function DocsHomePage() {
             {/* Introduction Section */}
             <section id="introduction" className="mb-12">
               <h2 className="text-3xl font-bold mb-6">Introduction</h2>
-              <p className="text-sm">
-                Welcome to the documentation for NoPoint.
-              </p>
+              <p className="text-sm">Welcome to the documentation for NoPoint.</p>
               <p className="text-sm mt-4">
                 Have you ever had your pinky hurt from tapping and untapping
                 shift to get symbols for your code? Now, worry no longer
@@ -44,7 +88,8 @@ export default function DocsHomePage() {
                 really) type a semicolon again with the keyword <code>END</code>!
               </p>
               <p className="text-sm mt-2">
-                Here you will find everything there is to know and to learn about NoPoint!
+                Here you will find everything there is to know and to learn
+                about NoPoint!
               </p>
             </section>
 
@@ -52,7 +97,8 @@ export default function DocsHomePage() {
             <section id="syntax" className="mb-12">
               <h2 className="text-xl font-bold mb-2">Syntax</h2>
               <p className="text-sm">
-                The syntax of NoPoint is impeccable and perfect and there will be no more discussion on this point!
+                The syntax of NoPoint is impeccable and perfect and there will
+                be no more discussion on this point!
               </p>
               <a href="/docs/syntax">
                 <button className="bg-purple-600 text-white text-base font-semibold px-6 py-3 rounded-xl shadow-md hover:bg-purple-700 transition duration-300 mt-4">
@@ -70,49 +116,52 @@ export default function DocsHomePage() {
 
               {/* Example 1 */}
               <div className="example mb-6">
-                <h3 className="text-md font-semibold mb-1">Example 1: Print a string</h3>
-                <pre className="bg-purple-800 text-white p-4 rounded text-sm overflow-x-auto">
-{`COMMENT This prints Hello, World! END
-PRINT QUOTE Hello, World! QUOTE END`}
-                </pre>
+                <h3 className="text-md font-semibold mb-1">
+                  Example 1: Print a string
+                </h3>
+                <pre className="bg-purple-800 text-white p-4 rounded text-sm overflow-x-auto">{`COMMENT This prints Hello, World! END
+PRINT QUOTE Hello, World! QUOTE END`}</pre>
                 <p className="text-sm mt-2">Output:</p>
                 <pre className="bg-purple-900 text-white p-3 rounded text-sm mt-1">
-Hello, World!
+                  Hello, World!
                 </pre>
               </div>
 
               {/* Example 2 */}
               <div className="example mb-6">
-                <h3 className="text-md font-semibold mb-1">Example 2: Variables and math</h3>
-                <pre className="bg-purple-800 text-white p-4 rounded text-sm overflow-x-auto">
-{`integer x EQUALS 5 END
+                <h3 className="text-md font-semibold mb-1">
+                  Example 2: Variables and math
+                </h3>
+                <pre className="bg-purple-800 text-white p-4 rounded text-sm overflow-x-auto">{`integer x EQUALS 5 END
 double y EQUALS 3.5 END
 PRINT x END
-PRINT y END`}
-                </pre>
+PRINT y END`}</pre>
                 <p className="text-sm mt-2">Output:</p>
                 <pre className="bg-purple-900 text-white p-3 rounded text-sm mt-1">
-5
-3.5
+                  5
+                  {"\n"}
+                  3.5
                 </pre>
               </div>
 
               {/* Example 3 */}
               <div className="example mb-6">
-                <h3 className="text-md font-semibold mb-1">Example 3: Using functions</h3>
-                <pre className="bg-purple-800 text-white p-4 rounded text-sm overflow-x-auto">
-{`function sayHi SEMICOLON
+                <h3 className="text-md font-semibold mb-1">
+                  Example 3: Using functions
+                </h3>
+                <pre className="bg-purple-800 text-white p-4 rounded text-sm overflow-x-auto">{`function sayHi SEMICOLON
     PRINT QUOTE Hi there! QUOTE END
-sayHi SEMICOLON`}
-                </pre>
+sayHi SEMICOLON`}</pre>
                 <p className="text-sm mt-2">Output:</p>
                 <pre className="bg-purple-900 text-white p-3 rounded text-sm mt-1">
-Hi there!
+                  Hi there!
                 </pre>
               </div>
 
               <p className="text-sm mb-4">
-                These examples demonstrate the basic syntax and functionality of NoPoint. You can create variables, define functions, and print output easily.
+                These examples demonstrate the basic syntax and functionality of
+                NoPoint. You can create variables, define functions, and print
+                output easily.
               </p>
               <a href="/docs/examples">
                 <button className="bg-purple-600 text-white text-base font-semibold px-6 py-3 rounded-xl shadow-md hover:bg-purple-700 transition duration-300">
@@ -124,8 +173,10 @@ Hi there!
             {/* Playground Section */}
             <section id="playground" className="mb-12">
               <h2 className="text-xl font-bold mb-2">Playground</h2>
-              <p className="text-sm mb-4">Write your NoPoint code below and run it:</p>
-              <form>
+              <p className="text-sm mb-4">
+                Write your NoPoint code below and run it:
+              </p>
+              <form onSubmit={handleSubmit}>
                 <textarea
                   name="code"
                   id="codeInput"
@@ -138,7 +189,10 @@ Hi there!
                 >
                   Run Code
                 </button>
-                <span id="loading" className="ml-2 text-sm text-purple-600 hidden">
+                <span
+                  id="loading"
+                  className="ml-2 text-sm text-purple-600 hidden"
+                >
                   Running...
                 </span>
               </form>
