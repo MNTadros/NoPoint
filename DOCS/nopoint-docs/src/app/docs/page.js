@@ -111,61 +111,11 @@ export default function DocsHomePage() {
             <section id="examples" className="mb-12">
               <h2 className="text-xl font-bold mb-2">Examples</h2>
               <p className="text-sm mb-4">
-                Here are some simple examples to get you started:
-              </p>
-
-              {/* Example 1 */}
-              <div className="example mb-6">
-                <h3 className="text-md font-semibold mb-1">
-                  Example 1: Print a string
-                </h3>
-                <pre className="bg-purple-800 text-white p-4 rounded text-sm overflow-x-auto">{`COMMENT This prints Hello, World! END
-PRINT QUOTE Hello, World! QUOTE END`}</pre>
-                <p className="text-sm mt-2">Output:</p>
-                <pre className="bg-purple-900 text-white p-3 rounded text-sm mt-1">
-                  Hello, World!
-                </pre>
-              </div>
-
-              {/* Example 2 */}
-              <div className="example mb-6">
-                <h3 className="text-md font-semibold mb-1">
-                  Example 2: Variables and math
-                </h3>
-                <pre className="bg-purple-800 text-white p-4 rounded text-sm overflow-x-auto">{`integer x EQUALS 5 END
-double y EQUALS 3.5 END
-PRINT x END
-PRINT y END`}</pre>
-                <p className="text-sm mt-2">Output:</p>
-                <pre className="bg-purple-900 text-white p-3 rounded text-sm mt-1">
-                  5
-                  {"\n"}
-                  3.5
-                </pre>
-              </div>
-
-              {/* Example 3 */}
-              <div className="example mb-6">
-                <h3 className="text-md font-semibold mb-1">
-                  Example 3: Using functions
-                </h3>
-                <pre className="bg-purple-800 text-white p-4 rounded text-sm overflow-x-auto">{`function sayHi SEMICOLON
-    PRINT QUOTE Hi there! QUOTE END
-sayHi SEMICOLON`}</pre>
-                <p className="text-sm mt-2">Output:</p>
-                <pre className="bg-purple-900 text-white p-3 rounded text-sm mt-1">
-                  Hi there!
-                </pre>
-              </div>
-
-              <p className="text-sm mb-4">
-                These examples demonstrate the basic syntax and functionality of
-                NoPoint. You can create variables, define functions, and print
-                output easily.
+                Check out examples of NoPoint code in action.
               </p>
               <a href="/docs/examples">
                 <button className="bg-purple-600 text-white text-base font-semibold px-6 py-3 rounded-xl shadow-md hover:bg-purple-700 transition duration-300">
-                  Explore more examples →
+                  Explore examples →
                 </button>
               </a>
             </section>
