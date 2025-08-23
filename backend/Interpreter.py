@@ -51,6 +51,8 @@ class Interpreter:
                     value = self._handle_calc(expr_tokens[1:], self.volume_formulas, 3, return_numeric=True)
                 elif expr_tokens[0] == "AREA":
                     value = self._handle_calc(expr_tokens[1:], self.area_formulas, 2, return_numeric=True)
+                elif expr_tokens[0] == "SQRT":
+                    value = math.sqrt(self.resolve_value(expr_tokens[1]))
                 else:
                     value = self.evaluate_expression(expr_tokens)
                 self.variables[name] = value
@@ -91,17 +93,22 @@ class Interpreter:
         self.functions = {}
         current_func = None
         body_lines = []
+        function_definitions = set()
 
+        # First pass: collect function definitions
         for line in lines:
-            if line.startswith("function"):
-                parts = line.split()
-                current_func = parts[1]
+            stripped = line.strip()
+            if stripped.startswith("function"):
+                parts = stripped.split()
+                function_name = parts[1]
+                function_definitions.add(function_name)
+                current_func = function_name
                 body_lines = []
-            elif line.endswith("SEMICOLON") and current_func is not None:
+            elif stripped.endswith("SEMICOLON") and current_func is not None:
                 self.functions[current_func] = body_lines[:]
                 current_func = None
             elif current_func is not None and (line.startswith("    ") or line.startswith("\t")):
-                body_lines.append(line.strip())
+                body_lines.append(stripped)
 
         # Second pass: execute all top-level lines
         for line in lines:
@@ -117,7 +124,11 @@ class Interpreter:
             elif stripped == "COMMENT":
                 pass
             elif len(stripped.split()) == 2 and stripped.split()[1] == "SEMICOLON":
-                self.execute_function(stripped.split()[0])
+                func_name = stripped.split()[0]
+                
+                # Only execute if it's a function call, not a function definition
+                if func_name not in function_definitions:
+                    self.execute_function(func_name)
 
     # Handle PRINT command
     def handle_print(self, line):
@@ -133,6 +144,9 @@ class Interpreter:
             formulas = self.volume_formulas if parts[1] == "VOLUME" else self.area_formulas
             result = self._handle_calc(parts[2:-1], formulas, unit_power)
             print(result)
+        elif parts[1] == "SQRT":
+            val = self.resolve_value(parts[2])
+            print(math.sqrt(val))
         elif len(parts) == 3 and parts[2] == "END":
             varname = parts[1]
             print(self.variables.get(varname, f"Undefined variable: {varname}"))
@@ -151,6 +165,8 @@ class Interpreter:
     def evaluate_expression(self, parts):
         if len(parts) == 1:
             return self.resolve_value(parts[0])
+        elif len(parts) == 2 and parts[0] == "SQRT":
+            return math.sqrt(self.resolve_value(parts[1]))
         elif len(parts) == 3:
             left = parts[0]
             operator = parts[1]
@@ -169,8 +185,6 @@ class Interpreter:
                 return left_val ** right_val
             elif operator == "MOD":
                 return left_val % right_val
-            elif operator == "SQRT":
-                return math.sqrt(left_val)
 
     # Evaluate boolean expressions
     def evaluate_does(self, parts):
