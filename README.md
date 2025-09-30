@@ -1,5 +1,7 @@
 # NoPoint - The Pointless Language
 
+> *Note: AI assistance was used to help format and structure documentation for this project.*
+
 <div align="center">
    <img src="./DOCS/imgs/NoPoint.png" alt="NoPoint Logo" width="400">
 </div>

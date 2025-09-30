@@ -153,18 +153,17 @@ export default function DocsHomePage() {
                 Click "Run Code" to see output here...
               </pre>
             </section>
+
+            {/* Learn More Section */}
+            <section className="mb-12 text-center">
+              <a href="/docs/reference">
+                <button className="bg-purple-600 text-white text-base font-semibold px-6 py-3 rounded-xl shadow-md hover:bg-purple-700 transition duration-300">
+                  View full reference →
+                </button>
+              </a>
+            </section>
           </div>
         </main>
-      </div>
-
-      {/* Learn More Button */}
-      <div className="flex justify-center pb-6 bg-purple-100">
-        <a
-          href="/docs"
-          className="bg-purple-600 text-white text-xl font-semibold py-4 px-8 rounded-2xl shadow-lg hover:bg-purple-700 transition duration-300"
-        >
-          Learn more about NoPoint!
-        </a>
       </div>
     </>
   );
